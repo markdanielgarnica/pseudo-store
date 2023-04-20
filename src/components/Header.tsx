@@ -22,7 +22,6 @@ import ShoppingCartProduct from "./ShoppingCartProduct";
 import PopoverUI from "./PopoverUI";
 
 function Header() {
-  const { handleUpdateCartData } = useContext(AppContext);
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
   const handlePopoverClick = (event: MouseEvent<HTMLButtonElement>) =>
     setAnchorEl(event.currentTarget);

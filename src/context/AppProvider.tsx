@@ -1,6 +1,15 @@
 import React, { createContext, useEffect, useState } from "react";
+interface AppContextValue {
+  cart: any[];
+  handleAddToCart: React.Dispatch<React.SetStateAction<any>>;
+  handleRemoveFromCart: React.Dispatch<React.SetStateAction<any>>;
+}
 
-export const AppContext = createContext({});
+export const AppContext = createContext<AppContextValue>({
+  cart: [],
+  handleAddToCart: () => {},
+  handleRemoveFromCart: () => {},
+});
 
 function AppProvider({
   children,
@@ -56,10 +65,10 @@ function AppProvider({
     localStorage.setItem("cart", serialized(updatedCart));
   }
 
-  function handleUpdateCartData(cartData: any) {
-    console.log(cartData);
-    setCart(cartData);
-  }
+  // function handleUpdateCartData(cartData: any) {
+  //   console.log(cartData);
+  //   setCart(cartData);
+  // }
 
   return (
     <AppContext.Provider
@@ -67,7 +76,7 @@ function AppProvider({
         cart,
         handleAddToCart,
         handleRemoveFromCart,
-        handleUpdateCartData,
+        // handleUpdateCartData,
       }}
     >
       {children}

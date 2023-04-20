@@ -15,7 +15,6 @@ import {
   colors,
 } from "@mui/material";
 
-import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
 import React, { useContext, useEffect, useRef, useState } from "react";
 import Layout from "@/components/Layout";
 import { AppContext } from "@/context/AppProvider";
@@ -78,7 +77,7 @@ function Main({ data }: any) {
     setSearchTerm(e.target.value);
   }
   function handleNavigationClick() {
-    sessionStorage.setItem("scrollPosition", window.scrollY);
+    sessionStorage.setItem("scrollPosition", window.scrollY.toString());
   }
 
   return (
