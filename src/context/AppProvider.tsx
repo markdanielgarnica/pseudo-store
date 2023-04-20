@@ -1,9 +1,19 @@
-import React, { createContext, useState } from "react";
+import React, { createContext, useEffect, useState } from "react";
 
-export const AppContext = createContext();
+export const AppContext = createContext({});
 
-function AppProvider({ children }: any) {
+function AppProvider({
+  children,
+  serialized = JSON.stringify,
+  JsonParser = JSON.parse,
+}: any) {
   const [cart, setCart] = useState<any[]>([]);
+  useEffect(() => {
+    const storedCart = localStorage.getItem("cart");
+    if (storedCart) {
+      setCart(JsonParser(storedCart));
+    }
+  }, []);
   function handleAddToCart({
     prodId,
     prodImg,
@@ -15,22 +25,35 @@ function AppProvider({ children }: any) {
     if (
       cart.findIndex((cartContent: any) => cartContent.prodId === prodId) === -1
     ) {
-      setCart((prev) => [
-        ...prev,
-        {
-          prodId,
-          prodImg,
-          prodTitle,
-          prodDesc,
-          prodPrice,
-          quantity,
-        },
-      ]);
+      setCart((prev) => {
+        const updatedCart = [
+          ...prev,
+          {
+            prodId,
+            prodImg,
+            prodTitle,
+            prodDesc,
+            prodPrice,
+            quantity,
+          },
+        ];
+
+        try {
+          localStorage.setItem("cart", JSON.stringify(updatedCart));
+        } catch (err) {
+          console.error("Unable to save cart to localStorage:", err);
+        }
+        return updatedCart;
+      });
     }
   }
 
   function handleRemoveFromCart(productId: any) {
-    setCart(cart.filter((prodCart) => prodCart.prodId !== productId));
+    const updatedCart = cart.filter(
+      (prodCart) => prodCart.prodId !== productId
+    );
+    setCart(updatedCart);
+    localStorage.setItem("cart", serialized(updatedCart));
   }
 
   function handleUpdateCartData(cartData: any) {
