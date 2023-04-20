@@ -3,11 +3,7 @@ import { Box, Button, colors } from "@mui/material";
 import Image from "next/image";
 import React, { useEffect, useRef, useState } from "react";
 import { formatNumber } from "@/utils/formatNumber";
-function ShoppingCartProduct({
-  product,
-  handleOverallTotal,
-  setOverallTotal,
-}: any) {
+function ShoppingCartProduct({ product, handleProdSubTotal }: any) {
   const { prodId, prodImg, prodTitle, prodDesc, prodPrice } = product;
   const [quantityState, setQuantityState] = useState(1);
   const subTotal = prodPrice * quantityState;
@@ -54,19 +50,15 @@ function ShoppingCartProduct({
                     setQuantityState(quantityState);
                     return;
                   }
-                  setQuantityState(quantityState - 1);
-                  setOverallTotal((prevTotal: any) => prevTotal - prodPrice);
-                  // setOverallTotal((prevTotal: any) => prevTotal - prodPrice);
-                  // handleOverallTotal((prevTotal: any) => {
-                  //   console.log(prevTotal, prevTotal - prodPrice);
-                  //   return prevTotal - prodPrice;
-                  // });
+                  const quantity = quantityState - 1;
+                  setQuantityState(quantity);
+                  handleProdSubTotal({ prodId, quantity });
                 }}
                 sx={{
                   borderRadius: "1rem 0 0 1rem",
                   border: `1px solid ${colors.blueGrey[600]}`,
                   height: "1.2rem",
-                  width: "20px",
+                  width: "10px",
                 }}
               >
                 -
@@ -77,8 +69,28 @@ function ShoppingCartProduct({
                 type="number"
                 value={quantityState}
                 onChange={(e: any) => {
-                  if (e.target.value === "") return setQuantityState(1);
-                  setQuantityState(parseInt(e.target.value));
+                  const inputValue = e.target.value;
+                  const parsedValue = parseInt(inputValue);
+                  if (inputValue === "") {
+                    setQuantityState(1);
+                    handleProdSubTotal({
+                      prodId,
+                      quantity: 1,
+                    });
+                  } else if (parsedValue < 1) {
+                    const convertToPositive = Math.abs(parseInt(inputValue));
+                    setQuantityState(convertToPositive);
+                    handleProdSubTotal({
+                      prodId,
+                      quantity: convertToPositive,
+                    });
+                  } else {
+                    setQuantityState(parsedValue);
+                    handleProdSubTotal({
+                      prodId,
+                      quantity: parsedValue,
+                    });
+                  }
                 }}
                 style={{
                   borderLeft: 0,
@@ -88,7 +100,7 @@ function ShoppingCartProduct({
                   outlineColor: colors.blueGrey[600],
                   paddingLeft: "1rem",
                   paddingRight: "1rem",
-                  width: "50px",
+                  width: "90px",
                   height: "1.2rem",
                   textAlign: "center",
                 }}
@@ -99,15 +111,15 @@ function ShoppingCartProduct({
                   border: `1px solid ${colors.blueGrey[600]}`,
                   borderRadius: "0 1rem 1rem 0",
                   height: "1.2rem",
-                  width: "20px",
+                  width: "10px",
                 }}
                 onClick={() => {
-                  setQuantityState(quantityState + 1);
-                  setOverallTotal((prevTotal: any) => prevTotal + prodPrice);
-                  // handleOverallTotal((prevTotal: any) => {
-                  //   console.log(prevTotal, prevTotal + prodPrice);
-                  //   return prevTotal + prodPrice;
-                  // });
+                  const quantity = quantityState + 1;
+                  setQuantityState(quantity);
+                  handleProdSubTotal({
+                    prodId,
+                    quantity,
+                  });
                 }}
               >
                 +

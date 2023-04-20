@@ -1,49 +1,39 @@
 import { Box, Button, Popover, colors } from "@mui/material";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import ShoppingCartProduct from "./ShoppingCartProduct";
 import { AppContext } from "@/context/AppProvider";
 import { formatNumber } from "@/utils/formatNumber";
 
 function PopoverUI({ id, openPopover, anchorEl, handlePopoverClose }: any) {
   const { cart } = useContext(AppContext);
-  const [overallTotal, setOverallTotal] = useState(0);
+  const [prodSubTotal, setProdSubTotal] = useState<any[]>([]);
+
+  const overallTotal = prodSubTotal.reduce(
+    (acc: any, curr: any) => acc + curr.subTotal,
+    0
+  );
 
   useEffect(() => {
     if (openPopover) {
-      setOverallTotal(
-        cart.reduce((acc: any, curr: any) => {
-          console.log(acc, curr.prodPrice, acc + curr.prodPrice, "awehe");
-          return acc + curr.prodPrice;
-        }, 0)
+      setProdSubTotal(
+        cart.map(({ prodId, prodPrice, quantity }: any) => {
+          return { prodId, prodPrice, subTotal: prodPrice * quantity };
+        })
       );
-    } else {
-      setOverallTotal(0);
     }
   }, [openPopover]);
 
-  function handleDecreaseQuantity(id: any) {
-    // const cartCopy = [...cart];
-    // const index = cart.findIndex((prod: any) => prod.prodId === id);
-    // const shoppingCartProduct = cartCopy[index];
-    // const updatedQuantity =
-    //   shoppingCartProduct.quantity === 1
-    //     ? shoppingCartProduct.quantity
-    //     : shoppingCartProduct.quantity - 1;
-    // const updatedCart = { ...shoppingCartProduct, quantity: updatedQuantity };
-    // cartCopy[index] = updatedCart;
-    // handleUpdateCartData(cartCopy);
-  }
-  function handleIncreaseQuantity(id: any) {
-    // const cartCopy = [...cart];
-    // const index = cart.findIndex((prod: any) => prod.prodId === id);
-    // const shoppingCartProduct = cartCopy[index];
-    // const updatedQuantity = shoppingCartProduct.quantity + 1;
-    // const updatedCart = { ...shoppingCartProduct, quantity: updatedQuantity };
-    // cartCopy[index] = updatedCart;
-    // handleUpdateCartData(cartCopy);
-  }
-  function handleOverallTotal(total: any) {
-    setOverallTotal(total);
+  function handleProdSubTotal({ prodId, quantity }: any) {
+    const prodSubTotalCopy = [...prodSubTotal];
+    const index = prodSubTotalCopy.findIndex((prod) => prod.prodId === prodId);
+    const singleProdSubTotal = prodSubTotalCopy[index];
+    const newSubTotal = singleProdSubTotal.prodPrice * quantity;
+    const updatedSingleProdSubtotal = {
+      ...singleProdSubTotal,
+      subTotal: newSubTotal,
+    };
+    prodSubTotalCopy[index] = updatedSingleProdSubtotal;
+    setProdSubTotal(prodSubTotalCopy);
   }
 
   return (
@@ -71,10 +61,7 @@ function PopoverUI({ id, openPopover, anchorEl, handlePopoverClose }: any) {
                   <ShoppingCartProduct
                     key={prod.prodId}
                     product={prod}
-                    handleDecreaseQuantity={handleDecreaseQuantity}
-                    handleIncreaseQuantity={handleIncreaseQuantity}
-                    handleOverallTotal={handleOverallTotal}
-                    setOverallTotal={setOverallTotal}
+                    handleProdSubTotal={handleProdSubTotal}
                   />
                 );
               })}
