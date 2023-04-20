@@ -1,6 +1,7 @@
 import { Shop } from "@mui/icons-material";
 import {
   AppBar,
+  Badge,
   Box,
   Button,
   Checkbox,
@@ -22,6 +23,7 @@ import ShoppingCartProduct from "./ShoppingCartProduct";
 import PopoverUI from "./PopoverUI";
 
 function Header() {
+  const { cart } = useContext(AppContext);
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
   const handlePopoverClick = (event: MouseEvent<HTMLButtonElement>) =>
     setAnchorEl(event.currentTarget);
@@ -64,7 +66,9 @@ function Header() {
         variant="text"
         onClick={handlePopoverClick}
       >
-        <ShoppingCartOutlinedIcon />
+        <Badge badgeContent={cart.length} color="warning">
+          <ShoppingCartOutlinedIcon />
+        </Badge>
       </Button>
       <PopoverUI
         id={id}
