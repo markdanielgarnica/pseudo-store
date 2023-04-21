@@ -1,4 +1,11 @@
-import { Box, Button, Rating, Typography, colors } from "@mui/material";
+import {
+  Box,
+  Button,
+  Rating,
+  Typography,
+  colors,
+  useTheme,
+} from "@mui/material";
 import Image from "next/image";
 import Link from "next/link";
 import React, { useContext } from "react";
@@ -8,6 +15,10 @@ import { formatNumber } from "../../utils/formatNumber";
 
 function Product({ product, isAddedToCart, handleNavigationClick }: any) {
   const { handleAddToCart, handleRemoveFromCart } = useContext(AppContext);
+  const theme = useTheme();
+  const primaryMain = theme.palette.primary.main;
+  const hover = theme.palette.action.hover;
+
   const roundedRating = Math.round(product.rating.rate);
 
   return (
@@ -29,7 +40,7 @@ function Product({ product, isAddedToCart, handleNavigationClick }: any) {
             transition: "box-shadow .2s ease-in-out",
             boxShadow: "rgba(100, 100, 111, 0.2) 0px 7px 29px 0px",
           },
-
+          overflow: "hidden",
           cursor: "pointer",
         }}
       >
@@ -49,7 +60,6 @@ function Product({ product, isAddedToCart, handleNavigationClick }: any) {
         </Box>
         <Box px={2}>
           <Typography
-            variant="body1"
             sx={{
               whiteSpace: "nowrap",
               textOverflow: "ellipsis",
@@ -65,7 +75,7 @@ function Product({ product, isAddedToCart, handleNavigationClick }: any) {
               {roundedRating}
             </Box>
           </Box>
-          <p>Price: ${formatNumber(product.price)}</p>
+          <Typography>${formatNumber(product.price)}</Typography>
         </Box>
         {isAddedToCart ? (
           <Button
@@ -76,7 +86,7 @@ function Product({ product, isAddedToCart, handleNavigationClick }: any) {
               //   bgcolor: colors.blueGrey[900],
               // },
               borderRadius: 0,
-              color: colors.blueGrey[900],
+
               fontWeight: "bold",
             }}
             startIcon={<AddShoppingCartIcon />}
@@ -93,19 +103,22 @@ function Product({ product, isAddedToCart, handleNavigationClick }: any) {
             }}
             fullWidth
           >
-            Add to cart
+            <Typography variant="h6">Add to cart</Typography>
           </Button>
         ) : (
           <Button
             fullWidth
             variant="text"
             sx={{
-              bgcolor: colors.blueGrey[600],
-              "&:hover": {
-                bgcolor: colors.blueGrey[900],
-              },
-              color: "#ffff",
+              // bgcolor: colors.blueGrey[600],
+              // color: "#ffff",
+              // bgcolor: "primary",
               borderRadius: 0,
+              bgcolor: primaryMain,
+              color: "#fff",
+              "&:hover": {
+                bgcolor: hover,
+              },
             }}
             disableElevation
             onClick={(e) => {
@@ -113,7 +126,7 @@ function Product({ product, isAddedToCart, handleNavigationClick }: any) {
               handleRemoveFromCart(product.id);
             }}
           >
-            Remove from cart
+            <Typography variant="h6">Remove from cart</Typography>
           </Button>
         )}
       </Box>

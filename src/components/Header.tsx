@@ -13,6 +13,7 @@ import {
   Toolbar,
   Typography,
   colors,
+  useTheme,
 } from "@mui/material";
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 import Image from "next/image";
@@ -24,6 +25,8 @@ import PopoverUI from "./PopoverUI";
 
 function Header() {
   const { cart } = useContext(AppContext);
+  const theme = useTheme();
+  const secondary = theme.palette.secondary.main;
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
   const handlePopoverClick = (event: MouseEvent<HTMLButtonElement>) =>
     setAnchorEl(event.currentTarget);
@@ -40,9 +43,8 @@ function Header() {
       flexDirection="row"
       alignItems={"center"}
       justifyContent={"space-between"}
+      borderBottom={1}
       sx={{
-        bgcolor: colors.blueGrey[600],
-        color: "#ffff",
         paddingX: 5,
         paddingY: 4,
       }}
@@ -56,16 +58,11 @@ function Header() {
         </Toolbar>
       </AppBar> */}
       <Link href="/" style={{ textDecoration: "none", color: "inherit" }}>
-        <h2>Sample Store</h2>
+        <Typography variant="h2">Sample Store</Typography>
       </Link>
       {/* <Image src={AppLogo} width={100} alt="Sample Store Logo" /> */}
 
-      <Button
-        aria-describedby={id}
-        sx={{ cursor: "pointer", color: "#fff" }}
-        variant="text"
-        onClick={handlePopoverClick}
-      >
+      <Button aria-describedby={id} variant="text" onClick={handlePopoverClick}>
         <Badge badgeContent={cart.length} color="warning">
           <ShoppingCartOutlinedIcon />
         </Badge>

@@ -14,9 +14,44 @@ import Head from "next/head";
 import { useState } from "react";
 
 const theme = createTheme({
+  palette: {
+    text: {
+      primary: colors.blueGrey[700],
+    },
+    primary: {
+      main: colors.blueGrey[700],
+    },
+    action: {
+      hover: colors.blueGrey[900],
+    },
+
+    background: {
+      default: colors.grey[100],
+    },
+  },
   typography: {
     fontFamily: "Helvetica, Arial, sans-serif", // set your default font here
+    fontSize: 15,
+    h1: {
+      fontSize: 40,
+    },
+    h2: {
+      fontSize: 35,
+    },
+    h3: {
+      fontSize: 30,
+    },
+    h4: {
+      fontSize: 25,
+    },
+    h5: {
+      fontSize: 20,
+    },
+    h6: {
+      fontSize: 13,
+    },
   },
+
   components: {
     MuiCssBaseline: {
       styleOverrides: {

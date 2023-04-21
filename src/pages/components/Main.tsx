@@ -13,6 +13,7 @@ import {
   Stack,
   Typography,
   colors,
+  useTheme,
 } from "@mui/material";
 
 import React, { useContext, useEffect, useRef, useState } from "react";
@@ -22,10 +23,12 @@ import Product from "./Product";
 
 function Main({ data }: any) {
   const { cart } = useContext(AppContext);
+  const theme = useTheme();
+  const primary = theme.palette.primary.main;
+  const hover = theme.palette.action.hover;
   const [products, setProducts] = useState(() =>
     data.map((prod: any) => ({ ...prod, isAddedToCart: false }))
   );
-
   const categories = [
     "All",
     ...new Set(products.map((el: any) => el.category)),
@@ -33,8 +36,8 @@ function Main({ data }: any) {
   const [searchTerm, setSearchTerm] = useState<any>("");
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [scrollPosition, setScrollPosition] = useState(0);
-
   const filteredProducts = filterProducts(products);
+
   useEffect(() => {
     setScrollPosition(window.scrollY);
   }, []);
@@ -83,7 +86,7 @@ function Main({ data }: any) {
   return (
     <Layout>
       <Box width={"100%"} maxWidth={"1280px"} marginX={"auto"}>
-        <h1>Products</h1>
+        <Typography variant="h1">Product</Typography>
         <input
           type="text"
           placeholder="Search product name"
@@ -115,20 +118,23 @@ function Main({ data }: any) {
                   fontSize={".9rem"}
                   fontWeight={"light"}
                   onClick={() => handleCategoryClick(categoryName)}
-                  width={"150px"}
+                  width={"120px"}
                   textAlign={"center"}
                   sx={{
-                    backgroundColor: `${
-                      isSelected ? colors.blueGrey[600] : "white"
-                    }`,
+                    backgroundColor: `${isSelected ? primary : "white"}`,
                     fontWeight: `${isSelected ? "bold" : "normal"}`,
                     borderRadius: ".5rem",
                     cursor: "pointer",
                     userSelect: "none",
                     color: `${isSelected ? "white" : "black"}`,
+                    "&:hover": {
+                      bgcolor: hover,
+                      color: "#fff",
+                      transition: "background-color .2s ease-in-out",
+                    },
                   }}
                 >
-                  {capitalizedName}
+                  <Typography variant="h6">{capitalizedName}</Typography>
                 </Box>
               );
             })}

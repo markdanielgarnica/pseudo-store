@@ -1,7 +1,15 @@
 import Layout from "@/components/Layout";
 import Header from "@/components/Header";
 import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
-import { Box, Button, Modal, Paper, Rating, colors } from "@mui/material";
+import {
+  Box,
+  Button,
+  Modal,
+  Paper,
+  Rating,
+  colors,
+  useTheme,
+} from "@mui/material";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import axios from "axios";
 import Image from "next/image";
@@ -22,8 +30,11 @@ function Product({ singleProduct }: any) {
   } = singleProduct;
   const { cart, handleAddToCart, handleRemoveFromCart } =
     useContext(AppContext);
+  const theme = useTheme();
+  const primaryMain = theme.palette.primary.main;
   const isAddedToCart =
     cart.findIndex((cartContent: any) => cartContent.prodId === id) === -1;
+
   const [open, setOpen] = useState(false);
   const [quantity, setQuantity] = useState<number>(1);
   const roundedRating = Math.round(rating.rate);
@@ -168,7 +179,6 @@ function Product({ singleProduct }: any) {
                     variant="text"
                     sx={{
                       borderRadius: 0,
-                      color: colors.blueGrey[900],
                       fontWeight: "bold",
                     }}
                     disableElevation
@@ -184,7 +194,7 @@ function Product({ singleProduct }: any) {
                   fullWidth
                   variant="contained"
                   sx={{
-                    bgcolor: colors.blueGrey[600],
+                    bgcolor: primaryMain,
                     "&:hover": {
                       bgcolor: colors.blueGrey[900],
                     },
