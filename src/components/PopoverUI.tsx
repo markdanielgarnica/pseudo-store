@@ -1,18 +1,28 @@
-import { Box, Button, Popover, colors } from "@mui/material";
+import {
+  Box,
+  Button,
+  Popover,
+  Typography,
+  colors,
+  useTheme,
+} from "@mui/material";
 import React, { useContext, useEffect, useRef, useState } from "react";
 import ShoppingCartProduct from "./ShoppingCartProduct";
 import { AppContext } from "@/context/AppProvider";
 import { formatNumber } from "@/utils/formatNumber";
+import TotalDetailPane from "./TotalDetailPane";
 
 function PopoverUI({ id, openPopover, anchorEl, handlePopoverClose }: any) {
   const { cart } = useContext(AppContext);
+  const theme = useTheme();
+  const backgroundDefault = theme.palette.background.default;
   const [prodSubTotal, setProdSubTotal] = useState<any[]>([]);
 
   const overallTotal = prodSubTotal.reduce(
     (acc: any, curr: any) => acc + curr.subTotal,
     0
   );
-
+  const formatOverallTotal = `$${formatNumber(overallTotal)}`;
   useEffect(() => {
     if (openPopover) {
       setProdSubTotal(
@@ -51,11 +61,25 @@ function PopoverUI({ id, openPopover, anchorEl, handlePopoverClose }: any) {
         horizontal: "center",
       }}
     >
-      <Box px={2} py={1} maxWidth={500}>
-        <h3 style={{ color: colors.blueGrey[900] }}>Shopping Cart</h3>
+      <Box
+        px={2}
+        py={1}
+        maxWidth={400}
+        sx={{
+          bgcolor: backgroundDefault,
+        }}
+      >
+        <Typography variant="h4" fontWeight={"bold"} marginBottom={1}>
+          Shopping Cart
+        </Typography>
         {cart.length ? (
           <>
-            <Box display={"flex"} flexDirection={"column"} gap={1}>
+            <Box
+              display={"flex"}
+              flexDirection={"column"}
+              gap={1}
+              marginBottom={1}
+            >
               {cart.map((prod: any) => {
                 return (
                   <ShoppingCartProduct
@@ -66,23 +90,12 @@ function PopoverUI({ id, openPopover, anchorEl, handlePopoverClose }: any) {
                 );
               })}
             </Box>
-            <Box
-              px={1}
-              py={2}
-              bgcolor={colors.grey[200]}
-              borderRadius={2}
-              marginBottom={1}
-            >
-              <h3>Total: ${formatNumber(overallTotal)}</h3>
-            </Box>
+            <TotalDetailPane overallTotal={formatOverallTotal} />
             <Button
               fullWidth
               variant="contained"
               sx={{
-                bgcolor: colors.blueGrey[600],
-                "&:hover": {
-                  bgcolor: colors.blueGrey[900],
-                },
+                marginTop: 1,
               }}
             >
               Checkout

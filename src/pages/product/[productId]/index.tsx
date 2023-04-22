@@ -7,6 +7,7 @@ import {
   Modal,
   Paper,
   Rating,
+  Typography,
   colors,
   useTheme,
 } from "@mui/material";
@@ -32,11 +33,14 @@ function Product({ singleProduct }: any) {
     useContext(AppContext);
   const theme = useTheme();
   const primaryMain = theme.palette.primary.main;
+  const secondary = theme.palette.secondary.main;
   const isAddedToCart =
     cart.findIndex((cartContent: any) => cartContent.prodId === id) === -1;
 
   const [open, setOpen] = useState(false);
   const [quantity, setQuantity] = useState<number>(1);
+  const formatPrice = `$${formatNumber(price)}`;
+  const total = `$${formatNumber(price * quantity)}`;
   const roundedRating = Math.round(rating.rate);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -44,7 +48,13 @@ function Product({ singleProduct }: any) {
   return (
     <>
       <Layout>
-        <Box p={2} bgcolor={"#ffff"} borderRadius={"1rem"}>
+        <Box
+          p={2}
+          bgcolor={"#ffff"}
+          borderRadius={"1rem"}
+          maxWidth={"1200px"}
+          marginX={"auto"}
+        >
           <Link href="/">
             <Button
               variant="text"
@@ -53,7 +63,7 @@ function Product({ singleProduct }: any) {
                 color: "#000",
               }}
             >
-              Go back
+              <Typography>Go back</Typography>
             </Button>
           </Link>
           <Box display="flex" flexDirection={"row"} gap={2}>
@@ -79,7 +89,7 @@ function Product({ singleProduct }: any) {
               justifyContent={"space-between"}
             >
               <Box>
-                <h2>{title}</h2>
+                <Typography variant="h3">{title}</Typography>
                 <Box display={"flex"} alignItems={"center"} gap={1}>
                   <Rating
                     name="Rate"
@@ -88,25 +98,29 @@ function Product({ singleProduct }: any) {
                     size="medium"
                   />
                   <Box fontWeight={"light"} fontSize={".8rem"}>
-                    {roundedRating}
+                    <Typography>{roundedRating}</Typography>
                   </Box>
                 </Box>
 
-                <h1 style={{ color: colors.blueGrey[900] }}>
-                  ${formatNumber(price)}
-                </h1>
-                <Box display={"flex"} alignItems={"center"} gap={2}>
-                  Quantity
-                  <Box display={"flex"} flexDirection={"row"}>
+                <Typography variant="h2">{formatPrice}</Typography>
+                <Box
+                  display={"flex"}
+                  alignItems={"center"}
+                  gap={2}
+                  marginTop={2}
+                >
+                  <Typography variant="h5">Quantity</Typography>
+                  <Box display={"flex"} flexDirection={"row"} gap={1}>
                     <Button
-                      variant="outlined"
+                      variant="contained"
                       onClick={() =>
                         setQuantity(quantity === 1 ? quantity : quantity - 1)
                       }
                       sx={{
-                        borderRadius: "1rem 0 0 1rem",
-                        border: `1px solid ${colors.blueGrey[600]}`,
+                        minWidth: "2rem",
+                        height: "2rem",
                       }}
+                      disableElevation
                     >
                       -
                     </Button>
@@ -116,45 +130,47 @@ function Product({ singleProduct }: any) {
                       type="number"
                       value={quantity}
                       onChange={(e: any) => {
-                        if (e.target.value === "") return setQuantity(1);
-                        setQuantity(parseInt(e.target.value));
+                        const inputValue = e.target.value;
+                        const parsedValue = parseInt(inputValue);
+                        if (inputValue === "") {
+                          setQuantity(1);
+                        } else if (parsedValue < 1) {
+                          const convertToPositive = Math.abs(
+                            parseInt(inputValue)
+                          );
+                          setQuantity(convertToPositive);
+                        } else {
+                          setQuantity(parsedValue);
+                        }
                       }}
                       style={{
-                        borderLeft: 0,
-                        borderRight: 0,
-                        borderTop: `1px solid ${colors.blueGrey[600]}`,
-                        borderBottom: `1px solid ${colors.blueGrey[600]}`,
-                        outlineColor: colors.blueGrey[600],
-                        paddingLeft: "1rem",
-                        paddingRight: "1rem",
+                        border: 0,
                         width: "100px",
                         textAlign: "center",
                       }}
                     />
                     <Button
-                      variant="outlined"
+                      variant="contained"
+                      // size="small"
                       sx={{
-                        border: `1px solid ${colors.blueGrey[600]}`,
-                        borderRadius: "0 1rem 1rem 0",
+                        minWidth: "2rem",
+                        height: "2rem",
                       }}
-                      onClick={() => setQuantity(parseInt(quantity) + 1)}
+                      disableElevation
+                      onClick={() => setQuantity(quantity + 1)}
                     >
                       +
                     </Button>
                   </Box>
                 </Box>
               </Box>
+
               <Box display={"flex"} flexDirection={"row"} gap={1}>
                 {isAddedToCart ? (
                   <Button
                     variant="text"
                     sx={{
-                      // bgcolor: colors.blueGrey[600],
-                      // "&:hover": {
-                      //   bgcolor: colors.blueGrey[900],
-                      // },
                       borderRadius: 0,
-                      color: colors.blueGrey[900],
                       fontWeight: "bold",
                     }}
                     startIcon={<AddShoppingCartIcon />}
@@ -178,8 +194,12 @@ function Product({ singleProduct }: any) {
                     fullWidth
                     variant="text"
                     sx={{
-                      borderRadius: 0,
                       fontWeight: "bold",
+                      bgcolor: secondary,
+
+                      "&:hover": {
+                        bgcolor: secondary,
+                      },
                     }}
                     disableElevation
                     onClick={(e) => {
@@ -217,13 +237,109 @@ function Product({ singleProduct }: any) {
                       left: "50%",
                       transform: "translate(-50%, -50%)",
                       width: 400,
-                      bgcolor: "background.paper",
                       border: "none",
+                      bgcolor: "#fff",
                       boxShadow: 2,
-                      p: 4,
+                      px: 2,
+                      py: 1,
                     }}
                   >
-                    Total: {price * quantity}
+                    <Typography variant="h4">Order Summary</Typography>
+                    <Box
+                      display={"flex"}
+                      flexDirection={"column"}
+                      marginTop={1}
+                    >
+                      <Box>
+                        <Typography fontSize={16} textAlign={"center"}>
+                          {title}
+                        </Typography>
+                        <Box position={"relative"} height={"150px"}>
+                          <Image
+                            src={image}
+                            alt={description}
+                            width={0}
+                            height={0}
+                            sizes="100vw"
+                            style={{
+                              width: "100%",
+                              height: "100%",
+                              objectFit: "contain",
+                            }}
+                          />
+                        </Box>
+                        <Box
+                          display={"flex"}
+                          flexDirection={"column"}
+                          p={1}
+                          color={"black"}
+                          bgcolor={secondary}
+                          borderRadius={2}
+                          marginTop={1}
+                        >
+                          <Box display={"flex"} flexDirection={"row"}>
+                            <Box flex={1}>
+                              <Typography fontSize={15}>Price:</Typography>
+                            </Box>
+                            <Box>
+                              <Typography fontSize={15}>
+                                {formatPrice}
+                              </Typography>
+                            </Box>
+                          </Box>
+                          <Box display={"flex"} flexDirection={"row"}>
+                            <Box flex={1}>
+                              <Typography fontSize={15}>Quantity: </Typography>
+                            </Box>
+                            <Box>
+                              <Typography fontSize={15}>{quantity}</Typography>
+                            </Box>
+                          </Box>
+                          <Box display={"flex"} flexDirection={"row"}>
+                            <Box flex={1}>
+                              <Typography fontWeight={"bold"}>
+                                Total:
+                              </Typography>
+                            </Box>
+                            <Box>
+                              <Typography fontWeight={"bold"}>
+                                {total}
+                              </Typography>
+                            </Box>
+                          </Box>
+                        </Box>
+                      </Box>
+                      <Box marginTop={2} marginLeft={"auto"}>
+                        <Button
+                          variant="contained"
+                          sx={{ marginRight: 1 }}
+                          onClick={handleClose}
+                          size="small"
+                        >
+                          <Typography variant="h6">Cancel</Typography>
+                        </Button>
+                        <Button variant="text" size="small">
+                          <Typography variant="h6">Checkout</Typography>
+                        </Button>
+                      </Box>
+                      {/* {/* <Box display={"flex"} flexDirection={"row"}>
+                        <Typography fontSize={16}>Product image:</Typography>
+                        <Box flex={1} position={"relative"} height={"150px"}>
+                          <Image
+                            src={image}
+                            alt={description}
+                            width={0}
+                            height={0}
+                            sizes="100vw"
+                            style={{
+                              width: "100%",
+                              height: "100%",
+                              objectFit: "contain",
+                            }}
+                          />
+                        </Box>
+                      </Box> */}
+                    </Box>
                   </Box>
                 </Modal>
               </Box>

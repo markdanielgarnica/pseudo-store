@@ -1,12 +1,19 @@
 import { HighQuality } from "@mui/icons-material";
-import { Box, Button, colors } from "@mui/material";
+import { Box, Button, Typography, colors } from "@mui/material";
 import Image from "next/image";
 import React, { useEffect, useRef, useState } from "react";
 import { formatNumber } from "@/utils/formatNumber";
 function ShoppingCartProduct({ product, handleProdSubTotal }: any) {
   const { prodId, prodImg, prodTitle, prodDesc, prodPrice } = product;
-  const [quantityState, setQuantityState] = useState(1);
+  const [quantityState, setQuantityState] = useState<number>(1);
+  // let subTotal;
+  // if (quantityState === "") {
+  //   subTotal = 0;
+  // } else {
+  //   subTotal = prodPrice * quantityState;
+  // }
   const subTotal = prodPrice * quantityState;
+
   return (
     <Box
       display={"flex"}
@@ -15,8 +22,12 @@ function ShoppingCartProduct({ product, handleProdSubTotal }: any) {
       key={prodId}
       boxShadow={"inherit"}
       p={1}
+      sx={{
+        bgcolor: "#fff",
+      }}
+      borderRadius={2}
     >
-      <Box flex={"20%"} position={"relative"} height={"auto"}>
+      <Box flex={"25%"} position={"relative"} height={"auto"}>
         <Image
           src={prodImg}
           alt={prodDesc}
@@ -31,20 +42,21 @@ function ShoppingCartProduct({ product, handleProdSubTotal }: any) {
         />
       </Box>
       <Box
-        flex={"80%"}
+        flex={"75%"}
         display={"flex"}
         flexDirection={"column"}
         justifyContent={"space-between"}
         gap={3}
       >
         <Box>
-          <p>{prodTitle}</p>
-          <p>${formatNumber(prodPrice)}</p>
-          <Box display={"flex"} alignItems={"center"} gap={2}>
-            <p style={{ height: "1.2rem" }}>Quantity</p>
-            <Box display={"flex"} flexDirection={"row"}>
+          <Typography fontSize={".9rem"}>{prodTitle}</Typography>
+          <Typography>${formatNumber(prodPrice)}</Typography>
+          <Box display={"flex"} alignItems={"center"} gap={1}>
+            <Typography>Qty</Typography>
+            <Box display={"flex"} flexDirection={"row"} gap={1}>
               <Button
-                variant="outlined"
+                disableElevation
+                variant="contained"
                 onClick={() => {
                   if (quantityState === 1) {
                     setQuantityState(quantityState);
@@ -55,10 +67,8 @@ function ShoppingCartProduct({ product, handleProdSubTotal }: any) {
                   handleProdSubTotal({ prodId, quantity });
                 }}
                 sx={{
-                  borderRadius: "1rem 0 0 1rem",
-                  border: `1px solid ${colors.blueGrey[600]}`,
-                  height: "1.2rem",
-                  width: "10px",
+                  minWidth: "2rem",
+                  height: "1.5rem",
                 }}
               >
                 -
@@ -93,25 +103,21 @@ function ShoppingCartProduct({ product, handleProdSubTotal }: any) {
                   }
                 }}
                 style={{
-                  borderLeft: 0,
-                  borderRight: 0,
-                  borderTop: `1px solid ${colors.blueGrey[600]}`,
-                  borderBottom: `1px solid ${colors.blueGrey[600]}`,
+                  border: 0,
                   outlineColor: colors.blueGrey[600],
                   paddingLeft: "1rem",
                   paddingRight: "1rem",
-                  width: "90px",
-                  height: "1.2rem",
+                  width: 50,
+                  height: "1.5rem",
                   textAlign: "center",
                 }}
               />
               <Button
-                variant="outlined"
+                disableElevation
+                variant="contained"
                 sx={{
-                  border: `1px solid ${colors.blueGrey[600]}`,
-                  borderRadius: "0 1rem 1rem 0",
-                  height: "1.2rem",
-                  width: "10px",
+                  minWidth: "2rem",
+                  height: "1.5rem",
                 }}
                 onClick={() => {
                   const quantity = quantityState + 1;
@@ -127,10 +133,9 @@ function ShoppingCartProduct({ product, handleProdSubTotal }: any) {
             </Box>
           </Box>
         </Box>
-
-        <h3 style={{ color: colors.blueGrey[900] }}>
+        <Typography fontWeight={"bold"} fontSize={15}>
           Sub total: ${formatNumber(subTotal)}
-        </h3>
+        </Typography>
       </Box>
     </Box>
   );

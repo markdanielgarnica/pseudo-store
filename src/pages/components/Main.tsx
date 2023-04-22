@@ -26,9 +26,7 @@ function Main({ data }: any) {
   const theme = useTheme();
   const primary = theme.palette.primary.main;
   const hover = theme.palette.action.hover;
-  const [products, setProducts] = useState(() =>
-    data.map((prod: any) => ({ ...prod, isAddedToCart: false }))
-  );
+  const products = data;
   const categories = [
     "All",
     ...new Set(products.map((el: any) => el.category)),
@@ -86,16 +84,19 @@ function Main({ data }: any) {
   return (
     <Layout>
       <Box width={"100%"} maxWidth={"1280px"} marginX={"auto"}>
-        <Typography variant="h1">Product</Typography>
+        <Typography variant="h1" fontWeight={"bold"} marginBottom={"1rem"}>
+          Products
+        </Typography>
         <input
           type="text"
           placeholder="Search product name"
           style={{
-            padding: ".5rem 1rem",
+            padding: ".8rem 1rem",
             borderRadius: "5px",
             marginBottom: "1rem",
             fontSize: "1rem",
             border: "1px solid gray",
+            width: 300,
           }}
           value={searchTerm}
           onChange={handleSearch}
@@ -122,7 +123,6 @@ function Main({ data }: any) {
                   textAlign={"center"}
                   sx={{
                     backgroundColor: `${isSelected ? primary : "white"}`,
-                    fontWeight: `${isSelected ? "bold" : "normal"}`,
                     borderRadius: ".5rem",
                     cursor: "pointer",
                     userSelect: "none",
@@ -134,7 +134,12 @@ function Main({ data }: any) {
                     },
                   }}
                 >
-                  <Typography variant="h6">{capitalizedName}</Typography>
+                  <Typography
+                    variant="h6"
+                    fontWeight={isSelected ? "bold" : "normal"}
+                  >
+                    {capitalizedName}
+                  </Typography>
                 </Box>
               );
             })}
