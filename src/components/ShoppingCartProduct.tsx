@@ -1,17 +1,16 @@
 import { HighQuality } from "@mui/icons-material";
 import { Box, Button, Typography, colors } from "@mui/material";
+
 import Image from "next/image";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
+import CloseIcon from "@mui/icons-material/Close";
 import { formatNumber } from "@/utils/formatNumber";
+import { AppContext } from "@/context/AppProvider";
 function ShoppingCartProduct({ product, handleProdSubTotal }: any) {
+  const { handleRemoveFromCart } = useContext(AppContext);
   const { prodId, prodImg, prodTitle, prodDesc, prodPrice } = product;
   const [quantityState, setQuantityState] = useState<number>(1);
-  // let subTotal;
-  // if (quantityState === "") {
-  //   subTotal = 0;
-  // } else {
-  //   subTotal = prodPrice * quantityState;
-  // }
+
   const subTotal = prodPrice * quantityState;
 
   return (
@@ -42,7 +41,7 @@ function ShoppingCartProduct({ product, handleProdSubTotal }: any) {
         />
       </Box>
       <Box
-        flex={"75%"}
+        flex={"65%"}
         display={"flex"}
         flexDirection={"column"}
         justifyContent={"space-between"}
@@ -136,6 +135,20 @@ function ShoppingCartProduct({ product, handleProdSubTotal }: any) {
         <Typography fontWeight={"bold"} fontSize={15}>
           Sub total: ${formatNumber(subTotal)}
         </Typography>
+      </Box>
+      <Box flex={"10%"}>
+        <Button
+          sx={{
+            minWidth: 4,
+          }}
+        >
+          <CloseIcon
+            sx={{
+              cursor: "pointer",
+            }}
+            onClick={() => handleRemoveFromCart(prodId)}
+          />
+        </Button>
       </Box>
     </Box>
   );

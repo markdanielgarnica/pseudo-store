@@ -1,22 +1,6 @@
-import {
-  Box,
-  Button,
-  Chip,
-  Grid,
-  List,
-  ListItem,
-  ListItemButton,
-  ListItemText,
-  OutlinedInput,
-  Paper,
-  Rating,
-  Stack,
-  Typography,
-  colors,
-  useTheme,
-} from "@mui/material";
+import { Box, Typography, useTheme } from "@mui/material";
 
-import React, { useContext, useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Layout from "@/components/Layout";
 import { AppContext } from "@/context/AppProvider";
 import Product from "./Product";
@@ -84,7 +68,7 @@ function Main({ data }: any) {
   return (
     <Layout>
       <Box width={"100%"} maxWidth={"1280px"} marginX={"auto"}>
-        <Typography variant="h1" fontWeight={"bold"} marginBottom={"1rem"}>
+        <Typography variant="h2" fontWeight={"bold"} marginBottom={"1rem"}>
           Products
         </Typography>
         <input

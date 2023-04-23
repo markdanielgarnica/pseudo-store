@@ -311,34 +311,17 @@ function Product({ singleProduct }: any) {
                       </Box>
                       <Box marginTop={2} marginLeft={"auto"}>
                         <Button
-                          variant="contained"
+                          variant="text"
                           sx={{ marginRight: 1 }}
                           onClick={handleClose}
                           size="small"
                         >
                           <Typography variant="h6">Cancel</Typography>
                         </Button>
-                        <Button variant="text" size="small">
+                        <Button variant="contained" size="small">
                           <Typography variant="h6">Checkout</Typography>
                         </Button>
                       </Box>
-                      {/* {/* <Box display={"flex"} flexDirection={"row"}>
-                        <Typography fontSize={16}>Product image:</Typography>
-                        <Box flex={1} position={"relative"} height={"150px"}>
-                          <Image
-                            src={image}
-                            alt={description}
-                            width={0}
-                            height={0}
-                            sizes="100vw"
-                            style={{
-                              width: "100%",
-                              height: "100%",
-                              objectFit: "contain",
-                            }}
-                          />
-                        </Box>
-                      </Box> */}
                     </Box>
                   </Box>
                 </Modal>

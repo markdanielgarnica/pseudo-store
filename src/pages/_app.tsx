@@ -1,17 +1,8 @@
 import Header from "@/components/Header";
 import AppProvider from "@/context/AppProvider";
-import {
-  CssBaseline,
-  Snackbar,
-  SnackbarOrigin,
-  ThemeProvider,
-  colors,
-  createTheme,
-} from "@mui/material";
-import axios from "axios";
+import { CssBaseline, ThemeProvider, colors, createTheme } from "@mui/material";
 import type { AppProps } from "next/app";
 import Head from "next/head";
-import { useState } from "react";
 
 const theme = createTheme({
   palette: {
@@ -22,12 +13,11 @@ const theme = createTheme({
       main: colors.blueGrey[700],
     },
     secondary: {
-      main: colors.blueGrey[100],
+      main: colors.blueGrey[50],
     },
     action: {
       hover: colors.blueGrey[900],
     },
-
     background: {
       default: colors.grey[100],
     },
