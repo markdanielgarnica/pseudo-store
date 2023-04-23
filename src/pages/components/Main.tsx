@@ -1,7 +1,6 @@
 import { Box, Typography, useTheme } from "@mui/material";
-
 import React, { useContext, useEffect, useState } from "react";
-import Layout from "@/components/Layout";
+import Layout from "@/global/Layout";
 import { AppContext } from "@/context/AppProvider";
 import Product from "./Product";
 
@@ -55,8 +54,6 @@ function Main({ data }: any) {
     } else {
       setSelectedCategory(name);
     }
-
-    localStorage.setItem("category", name);
   }
   function handleSearch(e: any) {
     setSearchTerm(e.target.value);

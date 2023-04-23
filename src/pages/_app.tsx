@@ -1,4 +1,4 @@
-import Header from "@/components/Header";
+import Header from "@/global/Header";
 import AppProvider from "@/context/AppProvider";
 import { CssBaseline, ThemeProvider, colors, createTheme } from "@mui/material";
 import type { AppProps } from "next/app";

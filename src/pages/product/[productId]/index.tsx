@@ -1,5 +1,5 @@
-import Layout from "@/components/Layout";
-import Header from "@/components/Header";
+import Layout from "@/global/Layout";
+import Header from "@/global/Header";
 import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
 import {
   Box,
@@ -56,13 +56,7 @@ function Product({ singleProduct }: any) {
           marginX={"auto"}
         >
           <Link href="/">
-            <Button
-              variant="text"
-              startIcon={<ArrowBackIcon />}
-              sx={{
-                color: "#000",
-              }}
-            >
+            <Button variant="text" startIcon={<ArrowBackIcon />}>
               <Typography>Go back</Typography>
             </Button>
           </Link>
