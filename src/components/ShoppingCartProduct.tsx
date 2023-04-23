@@ -51,7 +51,7 @@ function ShoppingCartProduct({ product, handleProdSubTotal }: any) {
           <Typography fontSize={".9rem"}>{prodTitle}</Typography>
           <Typography>${formatNumber(prodPrice)}</Typography>
           <Box display={"flex"} alignItems={"center"} gap={1}>
-            <Typography>Qty</Typography>
+            <Typography fontSize={"1rem"}>Qty</Typography>
             <Box display={"flex"} flexDirection={"row"} gap={1}>
               <Button
                 disableElevation
