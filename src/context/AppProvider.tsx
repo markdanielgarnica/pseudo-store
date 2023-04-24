@@ -25,7 +25,7 @@ function AppProvider({
   JsonParser = JSON.parse,
 }: any) {
   const [cart, setCart] = useState<any[]>([]);
-  const [selectedCategory, setSelectedCategory] = useState("All");
+  const [selectedCategory, setSelectedCategory] = useState<string>("All");
   const [scrollCategoryList, setScrollCategoryList] = useState(0);
 
   useEffect(() => {

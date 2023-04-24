@@ -19,6 +19,7 @@ function ShoppingCartProduct({ product, handleProdSubTotal }: any) {
     <Box
       display={"flex"}
       flexDirection={"row"}
+      width={"100%"}
       key={prodId}
       boxShadow={"inherit"}
       p={1}

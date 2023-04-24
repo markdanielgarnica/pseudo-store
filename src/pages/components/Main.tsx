@@ -18,12 +18,12 @@ function Main({ data }: any) {
   const theme = useTheme();
   const match = useMediaQuery("(max-width: 385px");
   const match2 = useMediaQuery("(max-width: 825px");
-  const divs = useRef([]);
-  const ContainerCategoryListRef = useRef(null);
+  const divs = useRef<any>([]);
+  const ContainerCategoryListRef = useRef<any>(null);
   const primary = theme.palette.primary.main;
   const hover = theme.palette.action.hover;
   const products = data;
-  const categories = [
+  const categories: any[] = [
     "All",
     ...new Set(products.map((el: any) => el.category)),
   ];
@@ -106,7 +106,7 @@ function Main({ data }: any) {
             pb={2}
             overflow={"auto"}
           >
-            {categories.map((categoryName: any, idx) => {
+            {categories.map((categoryName: string, idx) => {
               const capitalizedName =
                 categoryName.charAt(0).toUpperCase() + categoryName.slice(1);
               const isSelected = selectedCategory === categoryName;
