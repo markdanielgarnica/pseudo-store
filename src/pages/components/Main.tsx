@@ -68,7 +68,7 @@ function Main({ data }: any) {
       activeDiv.parentNode.scrollLeft = value;
       handleScrollCategoryList(value);
     }
-  }, [selectedCategory]);
+  }, [match2, , selectedCategory, handleScrollCategoryList]);
   useEffect(() => {
     if (ContainerCategoryListRef.current === null) return;
     ContainerCategoryListRef.current.scrollLeft = scrollCategoryList;
