@@ -9,6 +9,7 @@ import {
   Rating,
   Typography,
   colors,
+  useMediaQuery,
   useTheme,
 } from "@mui/material";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
@@ -32,8 +33,8 @@ function Product({ singleProduct }: any) {
   } = singleProduct;
   const { cart, handleAddToCart, handleRemoveFromCart } =
     useContext(AppContext);
-  const router = useRouter();
   const theme = useTheme();
+  const match = useMediaQuery("(max-width: 768px)");
   const primaryMain = theme.palette.primary.main;
   const secondary = theme.palette.secondary.main;
   const isAddedToCart =
@@ -61,8 +62,14 @@ function Product({ singleProduct }: any) {
               <Typography>Go back</Typography>
             </Button>
           </Link>
-          <Box display="flex" flexDirection={"row"} gap={2}>
-            <Box flex={1} position={"relative"} height={"450px"}>
+          <Box display="flex" flexDirection={match ? "column" : "row"} gap={2}>
+            <Box
+              flex={1}
+              position={"relative"}
+              width={match ? "250px" : "100%"}
+              alignSelf={"center"}
+              height={match ? "300px" : "450px"}
+            >
               <Image
                 src={image}
                 alt={description}
@@ -103,6 +110,7 @@ function Product({ singleProduct }: any) {
                   alignItems={"center"}
                   gap={2}
                   marginTop={2}
+                  flexDirection={match ? "column" : "row"}
                 >
                   <Typography variant="h5">Quantity</Typography>
                   <Box display={"flex"} flexDirection={"row"} gap={1}>
@@ -160,7 +168,12 @@ function Product({ singleProduct }: any) {
                 </Box>
               </Box>
 
-              <Box display={"flex"} flexDirection={"row"} gap={1}>
+              <Box
+                display={"flex"}
+                flexDirection={match ? "column" : "row"}
+                gap={1}
+                marginTop={match ? 4 : ""}
+              >
                 {isAddedToCart ? (
                   <Button
                     variant="text"

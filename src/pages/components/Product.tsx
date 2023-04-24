@@ -4,6 +4,7 @@ import {
   Rating,
   Typography,
   colors,
+  useMediaQuery,
   useTheme,
 } from "@mui/material";
 import Image from "next/image";
@@ -16,6 +17,7 @@ import { ScrollContext } from "@/context/ScrollProvider";
 function Product({ product, isAddedToCart, handleNavigationClick }: any) {
   const { handleAddToCart, handleRemoveFromCart } = useContext(AppContext);
   const { handleSetScrollPosition } = useContext(ScrollContext);
+  const match = useMediaQuery("(max-width: 490px)");
   const theme = useTheme();
   const primaryMain = theme.palette.primary.main;
   const hover = theme.palette.action.hover;
@@ -24,13 +26,17 @@ function Product({ product, isAddedToCart, handleNavigationClick }: any) {
   return (
     <Link
       href={`/product/${product.id}`}
-      style={{ textDecoration: "none", color: "inherit" }}
+      style={{
+        textDecoration: "none",
+        color: "inherit",
+        width: `${match ? "100%" : "12.5rem"}`,
+      }}
       onClick={() => handleSetScrollPosition(window.scrollY)}
+      // width={match ? "100%" : "12.5rem"}
     >
       <Box
         position={"relative"}
         height={"max-content"}
-        width={"12.5rem"}
         key={product.id}
         bgcolor={"#ffffff"}
         borderRadius={".5rem"}

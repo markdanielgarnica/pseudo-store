@@ -1,4 +1,4 @@
-import { Box, Typography, useTheme } from "@mui/material";
+import { Box, Typography, useMediaQuery, useTheme } from "@mui/material";
 import React, { useContext, useEffect, useRef, useState } from "react";
 import Layout from "@/global/Layout";
 import { AppContext } from "@/context/AppProvider";
@@ -10,6 +10,7 @@ function Main({ data }: any) {
   const { cart, selectedCategory, handleCategoryClick } =
     useContext(AppContext);
   const { scrollPosition } = useContext(ScrollContext);
+  // const matches = useMediaQuery("(max-width: 412px");
   const theme = useTheme();
 
   const primary = theme.palette.primary.main;
@@ -81,6 +82,8 @@ function Main({ data }: any) {
             gap={4}
             marginBottom={"1.5rem"}
             position={"relative"}
+            pb={2}
+            overflow={"auto"}
           >
             {categories.map((categoryName: any, idx) => {
               const capitalizedName =
@@ -92,7 +95,7 @@ function Main({ data }: any) {
                   fontSize={".9rem"}
                   fontWeight={"light"}
                   onClick={() => handleCategoryClick(categoryName)}
-                  width={"120px"}
+                  minWidth={"120px"}
                   textAlign={"center"}
                   sx={{
                     backgroundColor: `${isSelected ? primary : "white"}`,

@@ -4,6 +4,7 @@ import {
   Popover,
   Typography,
   colors,
+  useMediaQuery,
   useTheme,
 } from "@mui/material";
 import React, { useContext, useEffect, useRef, useState } from "react";
@@ -15,6 +16,7 @@ import TotalDetailPane from "./TotalDetailPane";
 function PopoverUI({ id, openPopover, anchorEl, handlePopoverClose }: any) {
   const { cart } = useContext(AppContext);
   const theme = useTheme();
+  const match = useMediaQuery("(max-width: 420px)");
   const backgroundDefault = theme.palette.background.default;
   const [prodSubTotal, setProdSubTotal] = useState<any[]>([]);
 
@@ -64,7 +66,7 @@ function PopoverUI({ id, openPopover, anchorEl, handlePopoverClose }: any) {
       <Box
         px={2}
         py={1}
-        maxWidth={400}
+        maxWidth={match ? 250 : 400}
         sx={{
           bgcolor: backgroundDefault,
         }}
