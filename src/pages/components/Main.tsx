@@ -47,13 +47,6 @@ function Main({ data }: any) {
     });
   }
 
-  // function handleCategoryClick(name: any) {
-  //   if (selectedCategory === name) {
-  //     setSelectedCategory("All");
-  //   } else {
-  //     setSelectedCategory(name);
-  //   }
-  // }
   function handleSearch(e: any) {
     setSearchTerm(e.target.value);
   }
@@ -61,7 +54,7 @@ function Main({ data }: any) {
   useEffect(() => {
     if (scrollPosition === 0) return;
     window.scrollTo(0, scrollPosition);
-  }, []);
+  }, [scrollPosition]);
   useEffect(() => {
     if (!match2) return;
     const activeDiv = divs.current[selectedCategory];
@@ -79,7 +72,7 @@ function Main({ data }: any) {
   useEffect(() => {
     if (ContainerCategoryListRef.current === null) return;
     ContainerCategoryListRef.current.scrollLeft = scrollCategoryList;
-  }, []);
+  }, [match2, handleScrollCategoryList, scrollCategoryList]);
   // const handleClick = (index) => {
   //   setActiveIndex(index);
   // };
@@ -119,6 +112,7 @@ function Main({ data }: any) {
               const isSelected = selectedCategory === categoryName;
               return (
                 <Box
+                  key={idx}
                   ref={(el) => (divs.current[categoryName] = el)}
                   py={1}
                   fontSize={".9rem"}

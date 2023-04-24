@@ -33,7 +33,7 @@ function AppProvider({
     if (storedCart) {
       setCart(JsonParser(storedCart));
     }
-  }, []);
+  }, [JsonParser]);
   function handleAddToCart({
     prodId,
     prodImg,

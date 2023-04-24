@@ -33,7 +33,7 @@ function PopoverUI({ id, openPopover, anchorEl, handlePopoverClose }: any) {
         })
       );
     }
-  }, [openPopover]);
+  }, [openPopover, cart]);
 
   function handleProdSubTotal({ prodId, quantity }: any) {
     const prodSubTotalCopy = [...prodSubTotal];
