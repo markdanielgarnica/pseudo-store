@@ -7,7 +7,8 @@ import { useRouter } from "next/router";
 import { ScrollContext } from "@/context/ScrollProvider";
 
 function Main({ data }: any) {
-  const { cart } = useContext(AppContext);
+  const { cart, selectedCategory, handleCategoryClick } =
+    useContext(AppContext);
   const { scrollPosition } = useContext(ScrollContext);
   const theme = useTheme();
 
@@ -19,7 +20,6 @@ function Main({ data }: any) {
     ...new Set(products.map((el: any) => el.category)),
   ];
   const [searchTerm, setSearchTerm] = useState<any>("");
-  const [selectedCategory, setSelectedCategory] = useState("All");
   const filteredProducts = filterProducts(products);
 
   function filterProducts(products: any) {
@@ -39,13 +39,13 @@ function Main({ data }: any) {
     });
   }
 
-  function handleCategoryClick(name: any) {
-    if (selectedCategory === name) {
-      setSelectedCategory("All");
-    } else {
-      setSelectedCategory(name);
-    }
-  }
+  // function handleCategoryClick(name: any) {
+  //   if (selectedCategory === name) {
+  //     setSelectedCategory("All");
+  //   } else {
+  //     setSelectedCategory(name);
+  //   }
+  // }
   function handleSearch(e: any) {
     setSearchTerm(e.target.value);
   }

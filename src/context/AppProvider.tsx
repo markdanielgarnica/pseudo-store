@@ -3,12 +3,16 @@ interface AppContextValue {
   cart: any[];
   handleAddToCart: React.Dispatch<React.SetStateAction<any>>;
   handleRemoveFromCart: React.Dispatch<React.SetStateAction<any>>;
+  selectedCategory: string;
+  handleCategoryClick: React.Dispatch<React.SetStateAction<any>>;
 }
 
 export const AppContext = createContext<AppContextValue>({
   cart: [],
   handleAddToCart: () => {},
   handleRemoveFromCart: () => {},
+  selectedCategory: "All",
+  handleCategoryClick: () => {},
 });
 
 function AppProvider({
@@ -17,6 +21,8 @@ function AppProvider({
   JsonParser = JSON.parse,
 }: any) {
   const [cart, setCart] = useState<any[]>([]);
+  const [selectedCategory, setSelectedCategory] = useState("All");
+
   useEffect(() => {
     const storedCart = localStorage.getItem("cart");
     if (storedCart) {
@@ -65,10 +71,13 @@ function AppProvider({
     localStorage.setItem("cart", serialized(updatedCart));
   }
 
-  // function handleUpdateCartData(cartData: any) {
-  //   console.log(cartData);
-  //   setCart(cartData);
-  // }
+  function handleCategoryClick(name: any) {
+    if (selectedCategory === name) {
+      setSelectedCategory("All");
+    } else {
+      setSelectedCategory(name);
+    }
+  }
 
   return (
     <AppContext.Provider
@@ -76,7 +85,8 @@ function AppProvider({
         cart,
         handleAddToCart,
         handleRemoveFromCart,
-        // handleUpdateCartData,
+        selectedCategory,
+        handleCategoryClick,
       }}
     >
       {children}
