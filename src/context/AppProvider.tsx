@@ -5,6 +5,8 @@ interface AppContextValue {
   handleRemoveFromCart: React.Dispatch<React.SetStateAction<any>>;
   selectedCategory: string;
   handleCategoryClick: React.Dispatch<React.SetStateAction<any>>;
+  scrollCategoryList: number;
+  handleScrollCategoryList: React.Dispatch<React.SetStateAction<any>>;
 }
 
 export const AppContext = createContext<AppContextValue>({
@@ -13,6 +15,8 @@ export const AppContext = createContext<AppContextValue>({
   handleRemoveFromCart: () => {},
   selectedCategory: "All",
   handleCategoryClick: () => {},
+  scrollCategoryList: 0,
+  handleScrollCategoryList: () => {},
 });
 
 function AppProvider({
@@ -22,6 +26,7 @@ function AppProvider({
 }: any) {
   const [cart, setCart] = useState<any[]>([]);
   const [selectedCategory, setSelectedCategory] = useState("All");
+  const [scrollCategoryList, setScrollCategoryList] = useState(0);
 
   useEffect(() => {
     const storedCart = localStorage.getItem("cart");
@@ -78,7 +83,9 @@ function AppProvider({
       setSelectedCategory(name);
     }
   }
-
+  function handleScrollCategoryList(val: number) {
+    setScrollCategoryList(val);
+  }
   return (
     <AppContext.Provider
       value={{
@@ -87,6 +94,8 @@ function AppProvider({
         handleRemoveFromCart,
         selectedCategory,
         handleCategoryClick,
+        scrollCategoryList,
+        handleScrollCategoryList,
       }}
     >
       {children}

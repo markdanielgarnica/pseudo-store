@@ -34,7 +34,7 @@ function Product({ singleProduct }: any) {
   const { cart, handleAddToCart, handleRemoveFromCart } =
     useContext(AppContext);
   const theme = useTheme();
-  const match = useMediaQuery("(max-width: 768px)");
+  const match = useMediaQuery("(max-width: 880px)");
   const primaryMain = theme.palette.primary.main;
   const secondary = theme.palette.secondary.main;
   const isAddedToCart =

@@ -7,12 +7,19 @@ import { useRouter } from "next/router";
 import { ScrollContext } from "@/context/ScrollProvider";
 
 function Main({ data }: any) {
-  const { cart, selectedCategory, handleCategoryClick } =
-    useContext(AppContext);
+  const {
+    cart,
+    selectedCategory,
+    handleCategoryClick,
+    scrollCategoryList,
+    handleScrollCategoryList,
+  } = useContext(AppContext);
   const { scrollPosition } = useContext(ScrollContext);
-  // const matches = useMediaQuery("(max-width: 412px");
   const theme = useTheme();
-
+  const match = useMediaQuery("(max-width: 385px");
+  const match2 = useMediaQuery("(max-width: 825px");
+  const divs = useRef([]);
+  const ContainerCategoryListRef = useRef(null);
   const primary = theme.palette.primary.main;
   const hover = theme.palette.action.hover;
   const products = data;
@@ -55,6 +62,27 @@ function Main({ data }: any) {
     if (scrollPosition === 0) return;
     window.scrollTo(0, scrollPosition);
   }, []);
+  useEffect(() => {
+    if (!match2) return;
+    const activeDiv = divs.current[selectedCategory];
+    const rect = activeDiv?.getBoundingClientRect();
+    const containerRect = activeDiv.parentNode.getBoundingClientRect();
+
+    if (rect.left < containerRect.left || rect.right > containerRect.right) {
+      const value =
+        activeDiv.offsetLeft -
+        (containerRect.width - activeDiv.offsetWidth) / 2;
+      activeDiv.parentNode.scrollLeft = value;
+      handleScrollCategoryList(value);
+    }
+  }, [selectedCategory]);
+  useEffect(() => {
+    if (ContainerCategoryListRef.current === null) return;
+    ContainerCategoryListRef.current.scrollLeft = scrollCategoryList;
+  }, []);
+  // const handleClick = (index) => {
+  //   setActiveIndex(index);
+  // };
   return (
     <Layout>
       <Box width={"100%"} maxWidth={"1280px"} marginX={"auto"}>
@@ -70,7 +98,7 @@ function Main({ data }: any) {
             marginBottom: "1rem",
             fontSize: "1rem",
             border: "1px solid gray",
-            width: 300,
+            width: match ? "100%" : 300,
           }}
           value={searchTerm}
           onChange={handleSearch}
@@ -91,10 +119,13 @@ function Main({ data }: any) {
               const isSelected = selectedCategory === categoryName;
               return (
                 <Box
+                  ref={(el) => (divs.current[categoryName] = el)}
                   py={1}
                   fontSize={".9rem"}
                   fontWeight={"light"}
-                  onClick={() => handleCategoryClick(categoryName)}
+                  onClick={() => {
+                    handleCategoryClick(categoryName);
+                  }}
                   minWidth={"120px"}
                   textAlign={"center"}
                   sx={{
