@@ -1,12 +1,16 @@
 import { Box, Typography, useTheme } from "@mui/material";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import Layout from "@/global/Layout";
 import { AppContext } from "@/context/AppProvider";
 import Product from "./Product";
+import { useRouter } from "next/router";
+import { ScrollContext } from "@/context/ScrollProvider";
 
 function Main({ data }: any) {
   const { cart } = useContext(AppContext);
+  const { scrollPosition } = useContext(ScrollContext);
   const theme = useTheme();
+
   const primary = theme.palette.primary.main;
   const hover = theme.palette.action.hover;
   const products = data;
@@ -16,20 +20,7 @@ function Main({ data }: any) {
   ];
   const [searchTerm, setSearchTerm] = useState<any>("");
   const [selectedCategory, setSelectedCategory] = useState("All");
-  const [scrollPosition, setScrollPosition] = useState(0);
   const filteredProducts = filterProducts(products);
-
-  useEffect(() => {
-    setScrollPosition(window.scrollY);
-  }, []);
-
-  useEffect(() => {
-    const previousScrollPosition = sessionStorage.getItem("scrollPosition");
-    if (previousScrollPosition !== null) {
-      window.scrollTo(0, parseInt(previousScrollPosition));
-      sessionStorage.removeItem("scrollPosition");
-    }
-  }, []);
 
   function filterProducts(products: any) {
     if (!searchTerm && selectedCategory === "All") return products;
@@ -58,10 +49,11 @@ function Main({ data }: any) {
   function handleSearch(e: any) {
     setSearchTerm(e.target.value);
   }
-  function handleNavigationClick() {
-    sessionStorage.setItem("scrollPosition", window.scrollY.toString());
-  }
 
+  useEffect(() => {
+    if (scrollPosition === 0) return;
+    window.scrollTo(0, scrollPosition);
+  }, []);
   return (
     <Layout>
       <Box width={"100%"} maxWidth={"1280px"} marginX={"auto"}>
@@ -135,6 +127,7 @@ function Main({ data }: any) {
                         (cartContent: any) => cartContent.prodId === product.id
                       ) === -1
                     }
+                    // handleNavigationClick={handleNavigationClick}
                     key={product.id}
                     product={product}
                   />

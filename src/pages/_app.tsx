@@ -3,6 +3,7 @@ import AppProvider from "@/context/AppProvider";
 import { CssBaseline, ThemeProvider, colors, createTheme } from "@mui/material";
 import type { AppProps } from "next/app";
 import Head from "next/head";
+import ScrollProvider from "@/context/ScrollProvider";
 
 const theme = createTheme({
   palette: {
@@ -80,8 +81,10 @@ export default function App({ Component, pageProps }: AppProps) {
         </Head>
         <CssBaseline />
         <AppProvider>
-          <Header />
-          <Component {...pageProps} />
+          <ScrollProvider>
+            <Header />
+            <Component {...pageProps} />
+          </ScrollProvider>
         </AppProvider>
       </ThemeProvider>
     </>

@@ -15,9 +15,10 @@ import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import axios from "axios";
 import Image from "next/image";
 import Link from "next/link";
-import React, { MouseEvent, useContext, useState } from "react";
+import React, { MouseEvent, useContext, useEffect, useState } from "react";
 import { AppContext } from "@/context/AppProvider";
 import { formatNumber } from "@/utils/formatNumber";
+import { useRouter } from "next/router";
 
 function Product({ singleProduct }: any) {
   const {
@@ -31,12 +32,12 @@ function Product({ singleProduct }: any) {
   } = singleProduct;
   const { cart, handleAddToCart, handleRemoveFromCart } =
     useContext(AppContext);
+  const router = useRouter();
   const theme = useTheme();
   const primaryMain = theme.palette.primary.main;
   const secondary = theme.palette.secondary.main;
   const isAddedToCart =
     cart.findIndex((cartContent: any) => cartContent.prodId === id) === -1;
-
   const [open, setOpen] = useState(false);
   const [quantity, setQuantity] = useState<number>(1);
   const formatPrice = `$${formatNumber(price)}`;

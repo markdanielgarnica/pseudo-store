@@ -12,20 +12,20 @@ import React, { useContext } from "react";
 import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
 import { AppContext } from "@/context/AppProvider";
 import { formatNumber } from "../../utils/formatNumber";
-
+import { ScrollContext } from "@/context/ScrollProvider";
 function Product({ product, isAddedToCart, handleNavigationClick }: any) {
   const { handleAddToCart, handleRemoveFromCart } = useContext(AppContext);
+  const { handleSetScrollPosition } = useContext(ScrollContext);
   const theme = useTheme();
   const primaryMain = theme.palette.primary.main;
   const hover = theme.palette.action.hover;
-
   const roundedRating = Math.round(product.rating.rate);
 
   return (
     <Link
       href={`/product/${product.id}`}
       style={{ textDecoration: "none", color: "inherit" }}
-      onClick={handleNavigationClick}
+      onClick={() => handleSetScrollPosition(window.scrollY)}
     >
       <Box
         position={"relative"}
@@ -81,10 +81,6 @@ function Product({ product, isAddedToCart, handleNavigationClick }: any) {
           <Button
             variant="text"
             sx={{
-              // bgcolor: colors.blueGrey[600],
-              // "&:hover": {
-              //   bgcolor: colors.blueGrey[900],
-              // },
               borderRadius: 0,
 
               fontWeight: "bold",
