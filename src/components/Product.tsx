@@ -12,9 +12,10 @@ import Link from "next/link";
 import React, { useContext } from "react";
 import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
 import { AppContext } from "@/context/AppProvider";
-import { formatNumber } from "../../utils/formatNumber";
+import { formatNumber } from "../utils/formatNumber";
 import { ScrollContext } from "@/context/ScrollProvider";
 function Product({ product, isAddedToCart, handleNavigationClick }: any) {
+  console.log("hows product", product);
   const { handleAddToCart, handleRemoveFromCart } = useContext(AppContext);
   const { handleSetScrollPosition } = useContext(ScrollContext);
   const match = useMediaQuery("(max-width: 490px)");

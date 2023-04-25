@@ -1,4 +1,3 @@
-import { HighQuality } from "@mui/icons-material";
 import { Box, Button, Typography, colors, useMediaQuery } from "@mui/material";
 
 import Image from "next/image";
@@ -20,6 +19,7 @@ function ShoppingCartProduct({ product, handleProdSubTotal }: any) {
       display={"flex"}
       flexDirection={"row"}
       width={"100%"}
+      justifyContent={"space-between"}
       key={prodId}
       boxShadow={"inherit"}
       p={1}
@@ -31,7 +31,7 @@ function ShoppingCartProduct({ product, handleProdSubTotal }: any) {
       <Box display={"flex"} flexDirection={match ? "column" : "row"} gap={1}>
         <Box
           flex={match ? "" : "25%"}
-          width={75}
+          minWidth={match ? "100%" : 75}
           marginX={match ? "auto" : ""}
           height={"auto"}
         >

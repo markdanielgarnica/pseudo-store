@@ -3,10 +3,10 @@ import React, { useContext, useEffect, useRef, useState } from "react";
 import Layout from "@/global/Layout";
 import { AppContext } from "@/context/AppProvider";
 import Product from "./Product";
-import { useRouter } from "next/router";
 import { ScrollContext } from "@/context/ScrollProvider";
 
 function Main({ data }: any) {
+  console.log("hows data", data);
   const {
     cart,
     selectedCategory,
@@ -76,6 +76,7 @@ function Main({ data }: any) {
   // const handleClick = (index) => {
   //   setActiveIndex(index);
   // };
+
   return (
     <Layout>
       <Box width={"100%"} maxWidth={"1280px"} marginX={"auto"}>
@@ -148,6 +149,7 @@ function Main({ data }: any) {
           <Box display={"flex"} flexDirection={"row"} flexWrap={"wrap"} gap={2}>
             {filteredProducts.length ? (
               filteredProducts.map((product: any) => {
+                console.log(product, "product");
                 return (
                   <Product
                     isAddedToCart={
