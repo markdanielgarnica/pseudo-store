@@ -13,7 +13,6 @@ function ScrollProvider({ children }: any) {
 
   function handleSetScrollPosition(scrollPos: any) {
     setScrollPosition(scrollPos);
-    // sessionStorage.setItem("scrollPosition", window.scrollY.toString());
   }
   return (
     <ScrollContext.Provider value={{ scrollPosition, handleSetScrollPosition }}>

@@ -27,6 +27,7 @@ function Header() {
   const { cart } = useContext(AppContext);
   const theme = useTheme();
   const primary = theme.palette.primary.main;
+  const background = theme.palette.background.default;
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
   const handlePopoverClick = (event: MouseEvent<HTMLButtonElement>) =>
     setAnchorEl(event.currentTarget);
@@ -43,7 +44,14 @@ function Header() {
       sx={{
         paddingX: 5,
         paddingY: 3,
+        backgroundColor: "rgba(245, 245, 245, 0.3)",
+        backdropFilter: "blur(3px)",
+        "-webkit-backdrop-filter": "blur(3px)",
       }}
+      position={"sticky"}
+      top={0}
+      // bgcolor={background}
+      zIndex={10}
     >
       <Box
         display="flex"
