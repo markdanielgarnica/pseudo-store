@@ -34,6 +34,7 @@ function Header() {
   const handlePopoverClose = () => {
     setAnchorEl(null);
   };
+
   const openPopover = Boolean(anchorEl);
   const id = openPopover ? "simple-popover" : undefined;
 

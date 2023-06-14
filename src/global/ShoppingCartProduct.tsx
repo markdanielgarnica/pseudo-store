@@ -62,6 +62,7 @@ function ShoppingCartProduct({ product, handleProdSubTotal }: any) {
               <Typography fontSize={"1rem"}>Qty</Typography>
               <Box display={"flex"} flexDirection={"row"} gap={1}>
                 <Button
+                  disabled={quantityState === 1}
                   disableElevation
                   variant="contained"
                   onClick={() => {
@@ -141,7 +142,7 @@ function ShoppingCartProduct({ product, handleProdSubTotal }: any) {
             </Box>
           </Box>
           <Typography marginTop={0} fontWeight={"bold"} fontSize={15}>
-            Sub total: ${formatNumber(subTotal)}
+            ${formatNumber(subTotal)}
           </Typography>
         </Box>
       </Box>

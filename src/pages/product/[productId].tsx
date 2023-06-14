@@ -119,6 +119,7 @@ function Product({ singleProduct }: any) {
                       onClick={() =>
                         setQuantity(quantity === 1 ? quantity : quantity - 1)
                       }
+                      disabled={quantity === 1}
                       sx={{
                         minWidth: "2rem",
                         height: "2rem",

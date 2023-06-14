@@ -157,7 +157,6 @@ function Main({ data }: any) {
                         (cartContent: any) => cartContent.prodId === product.id
                       ) === -1
                     }
-                    // handleNavigationClick={handleNavigationClick}
                     key={product.id}
                     product={product}
                   />

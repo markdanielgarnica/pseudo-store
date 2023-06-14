@@ -6,7 +6,8 @@ function Home({ data }: any) {
 }
 export async function getStaticProps() {
   try {
-    const { data } = await axios.get("https://fakestoreapi.com/products");
+    const { data } = await axios.get(`${process.env.BASE_URL}/getProducts`);
+    console.log(data);
     return {
       props: { data },
       revalidate: 60,

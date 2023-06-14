@@ -33,7 +33,6 @@ function Product({ product, isAddedToCart, handleNavigationClick }: any) {
         width: `${match ? "100%" : "12.5rem"}`,
       }}
       onClick={() => handleSetScrollPosition(window.scrollY)}
-      // width={match ? "100%" : "12.5rem"}
     >
       <Box
         position={"relative"}
